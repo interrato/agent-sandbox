@@ -53,13 +53,9 @@ let
           ".agent"
         ];
         readonly = [
-          ".pi/agent/skills"
           ".pi/agent/AGENTS.md"
           ".pi/agent/SYSTEM.md"
           ".pi/agent/APPEND_SYSTEM.md"
-          ".pi/agent/settings.json"
-          ".pi/agent/trust.json"
-          ".agent/skills"
         ];
       }
     else
