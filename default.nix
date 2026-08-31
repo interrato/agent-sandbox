@@ -38,7 +38,7 @@
   writeText,
 
   agentName ? "pi",
-  environment ? { },
+  env ? { },
   packages ? [ ],
   TERM ? "xterm-256color",
   TERMINFO ? "${ncurses}/share/terminfo",
@@ -110,8 +110,8 @@ let
   envVars =
     lib.concatMapAttrsStringSep "\n" (
       name: value: "  --setenv ${lib.escapeShellArg name} ${lib.escapeShellArg value} \\"
-    ) environment
-    + lib.optionalString (environment != { }) "\n"
+    ) env
+    + lib.optionalString (env != { }) "\n"
     + lib.concatMapStringsSep "\n" (var: "  --setenv ${var} \"\${${var}:-}\" \\") apiKeys;
 
   runtimeInputs = [
