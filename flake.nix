@@ -15,6 +15,9 @@
     {
       packages = forAllSystems (pkgs: {
         agent = pkgs.callPackage ./default.nix { };
+        agentNoCC = pkgs.callPackage ./default.nix {
+          cc = null;
+        };
         default = self.packages.${pkgs.stdenv.hostPlatform.system}.agent;
       });
     };

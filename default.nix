@@ -11,6 +11,7 @@
   file,
   findutils,
   gawk,
+  gcc,
   git,
   glibcLocales,
   gnugrep,
@@ -38,6 +39,7 @@
   writeText,
 
   agentName ? "pi",
+  cc ? gcc,
   env ? { },
   packages ? [ ],
   TERM ? "xterm-256color",
@@ -148,7 +150,8 @@ let
     which
     zip
   ]
-  ++ packages;
+  ++ packages
+  ++ lib.optional (cc != null) cc;
 
   closure = closureInfo { rootPaths = runtimeInputs; };
 
