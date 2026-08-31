@@ -10,12 +10,16 @@
   fd,
   file,
   findutils,
+  gawk,
+  git,
   glibcLocales,
   gnugrep,
   gnused,
   gnutar,
   gzip,
   inetutils,
+  jq,
+  jujutsu,
   less,
   man,
   ncurses,
@@ -26,6 +30,7 @@
   tree,
   unzip,
   util-linux,
+  vim,
   which,
   zip,
   writeShellApplication,
@@ -112,12 +117,16 @@ let
     fd
     file
     findutils
+    gawk
+    git
     glibcLocales
     gnugrep
     gnused
     gnutar
     gzip
     inetutils
+    jq
+    jujutsu
     less
     man
     ncurses
@@ -127,6 +136,7 @@ let
     tree
     unzip
     util-linux
+    vim
     which
     zip
   ]
