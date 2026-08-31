@@ -156,16 +156,18 @@ writeShellApplication {
   name = "agent";
 
   text = ''
-    WORKDIR="$(pwd -P)"
-    case "$WORKDIR" in
+    WORKDIR_SRC="$(pwd -P)"
+    case "$WORKDIR_SRC" in
     / | "$HOME" | "$HOME"/.* | "$HOME"/.*/*)
-      echo "agent: error: insecure working directory \"$WORKDIR\"" >&2
+      echo "agent: error: insecure working directory \"$WORKDIR_SRC\"" >&2
       exit 1
       ;;
     esac
 
+    WORKDIR_DST="/home/agent/$(basename "$WORKDIR_SRC")"
+
     clear
-    echo "agent: info: working directory is \"$WORKDIR\"" >&2
+    echo "agent: info: host working directory is \"$WORKDIR_SRC\"" >&2
     echo
     exec ${bubblewrap}/bin/bwrap \
       --unshare-all \
@@ -188,7 +190,7 @@ writeShellApplication {
     ${storeBinds}
       --dir /home/agent \
     ${agentBinds}
-      --bind "$WORKDIR" /home/agent/work \
+      --bind "$WORKDIR_SRC" "$WORKDIR_DST" \
       --die-with-parent \
       --clearenv \
     ${envVars}  --setenv COLORTERM "''${COLORTERM:-truecolor}" \
@@ -203,7 +205,7 @@ writeShellApplication {
       --setenv TERMINFO ${lib.escapeShellArg TERMINFO} \
       --perms 0700 --dir /run/user/1621 \
       --setenv XDG_RUNTIME_DIR /run/user/1621 \
-      --chdir /home/agent/work \
+      --chdir "$WORKDIR_DST" \
       -- ${agent.program} "$@"
   '';
 
