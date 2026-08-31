@@ -14,6 +14,7 @@
   git,
   glibcLocales,
   gnugrep,
+  gnumake,
   gnused,
   gnutar,
   gzip,
@@ -127,6 +128,7 @@ let
     git
     glibcLocales
     gnugrep
+    gnumake
     gnused
     gnutar
     gzip
