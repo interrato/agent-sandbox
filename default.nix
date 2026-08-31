@@ -74,6 +74,15 @@ let
       path: "  --ro-bind-try \"$HOME/${path}\" /home/agent/${path} \\"
     ) agent.readonly;
 
+  apiKeys = [
+    "ANTHROPIC_API_KEY"
+    "OPENAI_API_KEY"
+    "DEEPSEEK_API_KEY"
+    "GEMINI_API_KEY"
+    "OPENCODE_API_KEY"
+    "KIMI_API_KEY"
+  ];
+
   passwd = writeText "etc-passwd" ''
     agent:x:1621:1621:agent:/home/agent:/bin/sh
   '';
@@ -105,7 +114,8 @@ let
     lib.concatMapAttrsStringSep "\n" (
       name: value: "  --setenv ${lib.escapeShellArg name} ${lib.escapeShellArg value} \\"
     ) environment
-    + lib.optionalString (environment != { }) "\n";
+    + lib.optionalString (environment != { }) "\n"
+    + lib.concatMapStringsSep "\n" (var: "  --setenv ${var} \"\${${var}:-}\" \\") apiKeys;
 
   runtimeInputs = [
     agent.package
@@ -193,7 +203,8 @@ writeShellApplication {
       --bind "$WORKDIR_SRC" "$WORKDIR_DST" \
       --die-with-parent \
       --clearenv \
-    ${envVars}  --setenv COLORTERM "''${COLORTERM:-truecolor}" \
+    ${envVars}
+      --setenv COLORTERM "''${COLORTERM:-truecolor}" \
       --setenv HOME /home/agent \
       --setenv LANG "''${LANG:-en_US.UTF-8}" \
       --setenv LOCALE_ARCHIVE "${glibcLocales}/lib/locale/locale-archive" \
