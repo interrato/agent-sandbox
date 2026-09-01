@@ -25,6 +25,7 @@
   less,
   man,
   ncurses,
+  nix,
   patch,
   pi-coding-agent,
   procps,
@@ -140,6 +141,7 @@ let
     less
     man
     ncurses
+    nix
     patch
     procps
     ripgrep
