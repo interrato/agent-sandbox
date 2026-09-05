@@ -1,5 +1,6 @@
 {
   lib,
+  age,
   bash,
   bubblewrap,
   cacert,
@@ -7,6 +8,7 @@
   coreutils,
   curl,
   diffutils,
+  dig,
   fd,
   file,
   findutils,
@@ -22,20 +24,37 @@
   inetutils,
   jq,
   jujutsu,
+  lean4,
   less,
+  libreoffice,
   man,
+  minisign,
+  mkcert,
+  nano,
   ncurses,
   nix,
+  nodejs,
+  openssl,
+  pandoc,
   patch,
+  perl,
   pi-coding-agent,
+  poppler-utils,
   procps,
+  proverif,
+  python3,
+  qpdf,
   ripgrep,
+  rocq-core,
+  sage,
+  tamarin-prover,
   tree,
   unzip,
   util-linux,
   vim,
   which,
   zip,
+  wget,
   writeShellApplication,
   writeText,
 
@@ -44,6 +63,14 @@
   packages ? [ ],
   TERM ? "xterm-256color",
   TERMINFO ? "${ncurses}/share/terminfo",
+
+  networkSupport ? true,
+  pdfSupport ? true,
+  docSupport ? false,
+  cryptoSupport ? false,
+  proverSupport ? false,
+  nodeSupport ? agentName == "pi",
+  pythonSupport ? true,
 }:
 let
   agent =
@@ -119,9 +146,7 @@ let
   runtimeInputs = [
     agent.package
     bash
-    cacert
     coreutils
-    curl
     diffutils
     fd
     file
@@ -135,14 +160,15 @@ let
     gnused
     gnutar
     gzip
-    inetutils
     jq
     jujutsu
     less
     man
+    nano
     ncurses
     nix
     patch
+    perl
     procps
     ripgrep
     tree
@@ -152,6 +178,71 @@ let
     which
     zip
   ]
+  ++ lib.optionals networkSupport [
+    cacert
+    curl
+    dig
+    inetutils
+    wget
+  ]
+  ++ lib.optionals pdfSupport [
+    poppler-utils
+    qpdf
+  ]
+  ++ lib.optionals docSupport [
+    libreoffice
+    pandoc
+  ]
+  ++ lib.optionals cryptoSupport [
+    age
+    minisign
+    mkcert
+    openssl
+    sage
+  ]
+  ++ lib.optionals proverSupport [
+    lean4
+    proverif
+    rocq-core
+    tamarin-prover
+  ]
+  ++ lib.optional nodeSupport nodejs
+  ++ lib.optional pythonSupport (
+    python3.withPackages (
+      ps:
+      with ps;
+      [
+        matplotlib
+        numpy
+        pandas
+        pillow
+        pydantic
+        pytest
+        scipy
+      ]
+      ++ lib.optionals networkSupport [
+        beautifulsoup4
+        lxml
+        playwright
+        requests
+        scapy
+      ]
+      ++ lib.optionals pdfSupport [
+        ocrmypdf
+        pdfplumber
+        pypdf
+        reportlab
+      ]
+      ++ lib.optionals docSupport [
+        lxml
+        markitdown
+        openpyxl
+      ]
+      ++ lib.optionals cryptoSupport [
+        cryptography
+      ]
+    )
+  )
   ++ packages;
 
   closure = closureInfo { rootPaths = runtimeInputs; };
@@ -185,7 +276,7 @@ writeShellApplication {
       --unshare-all \
       --unshare-user \
       --disable-userns \
-      --share-net \
+      ${if networkSupport then "--share-net \\" else "--unshare-net \\"}
       --uid 1621 \
       --gid 1621 \
       --hostname sandbox \
