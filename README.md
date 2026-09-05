@@ -57,6 +57,9 @@ The name of the agent that will run.
 
 Environment variables to set for the sandboxed environment.
 
+> [!IMPORTANT]
+> The API key variables for the most common providers pass through from the host by default and cannot be overridden.
+
 #### `packages` (default: `[ ]`)
 
 Extra packages to include in the sandboxed environment.
