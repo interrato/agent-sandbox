@@ -53,7 +53,7 @@ let
         program = "${pi-coding-agent}/bin/pi";
         globals = [
           ".pi"
-          ".agent"
+          ".agents"
         ];
         readonly = [
           ".pi/agent/AGENTS.md"
