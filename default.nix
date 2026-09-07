@@ -283,6 +283,7 @@ writeShellApplication {
       --proc /proc --dev /dev \
       --perms 1777 --tmpfs /tmp \
       --symlink "${bash}/bin/bash" /bin/sh \
+      --symlink "${coreutils}/bin/env" /usr/bin/env \
       --ro-bind ${passwd} /etc/passwd \
       --ro-bind ${group} /etc/group \
       --ro-bind ${hosts} /etc/hosts \
