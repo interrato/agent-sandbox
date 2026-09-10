@@ -283,8 +283,8 @@ writeShellApplication {
       --hostname sandbox \
       --proc /proc --dev /dev \
       --perms 1777 --tmpfs /tmp \
-      --symlink "${bash}/bin/bash" /bin/sh \
-      --symlink "${coreutils}/bin/env" /usr/bin/env \
+      --symlink ${bash}/bin/bash /bin/sh \
+      --symlink ${coreutils}/bin/env /usr/bin/env \
       --ro-bind ${passwd} /etc/passwd \
       --ro-bind ${group} /etc/group \
       --ro-bind ${hosts} /etc/hosts \
@@ -303,10 +303,10 @@ writeShellApplication {
       --setenv COLORTERM "''${COLORTERM:-truecolor}" \
       --setenv HOME /home/agent \
       --setenv LANG "''${LANG:-en_US.UTF-8}" \
-      --setenv LOCALE_ARCHIVE "${glibcLocales}/lib/locale/locale-archive" \
+      --setenv LOCALE_ARCHIVE ${glibcLocales}/lib/locale/locale-archive \
       --setenv PATH "$PATH" \
       --setenv PS1 "sandbox$ " \
-      --setenv SHELL "${bash}/bin/bash" \
+      --setenv SHELL ${bash}/bin/bash \
       --setenv SSL_CERT_FILE ${cacert}/etc/ssl/certs/ca-bundle.crt \
       --setenv TERM ${lib.escapeShellArg TERM} \
       --setenv TERMINFO ${lib.escapeShellArg TERMINFO} \
