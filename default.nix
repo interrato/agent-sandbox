@@ -49,6 +49,7 @@
   sage,
   tamarin-prover,
   tree,
+  tzdata,
   unzip,
   util-linux,
   vim,
@@ -291,6 +292,7 @@ writeShellApplication {
       --ro-bind ${nsswitchConf} /etc/nsswitch.conf \
       --ro-bind-try /etc/protocols /etc/protocols \
       --ro-bind-try /etc/services /etc/services \
+      --ro-bind ${tzdata}/share/zoneinfo /usr/share/zoneinfo \
     ${storeBinds}
       --dir /home/agent \
     ${agentBinds}
@@ -308,6 +310,7 @@ writeShellApplication {
       --setenv SSL_CERT_FILE ${cacert}/etc/ssl/certs/ca-bundle.crt \
       --setenv TERM ${lib.escapeShellArg TERM} \
       --setenv TERMINFO ${lib.escapeShellArg TERMINFO} \
+      --setenv TZDIR ${tzdata}/share/zoneinfo \
       --perms 0700 --dir /run/user/1621 \
       --setenv XDG_RUNTIME_DIR /run/user/1621 \
       --chdir "$WORKDIR_DST" \
