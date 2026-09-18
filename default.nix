@@ -88,6 +88,9 @@ let
         ];
         readonly = [
           ".agents/skills"
+          ".pi/agent/extensions"
+          ".pi/agent/git"
+          ".pi/agent/npm"
           ".pi/agent/skills"
           ".pi/agent/AGENTS.md"
           ".pi/agent/APPEND_SYSTEM.md"
