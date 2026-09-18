@@ -292,7 +292,7 @@ writeShellApplication {
       --gid 1621 \
       --hostname sandbox \
       --proc /proc --dev /dev \
-      --perms 1777 --tmpfs /tmp \
+      --size 1073741824 --perms 1777 --tmpfs /tmp \
       --symlink ${bash}/bin/bash /bin/sh \
       --symlink ${coreutils}/bin/env /usr/bin/env \
       --ro-bind ${passwd} /etc/passwd \
