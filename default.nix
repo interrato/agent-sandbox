@@ -278,6 +278,8 @@ writeShellApplication {
 
     WORKDIR_DST="/home/agent/$(basename "$WORKDIR_SRC")"
 
+    ulimit -c 0    # no core dumps
+
     clear
     echo "agent: info: host working directory is \"$WORKDIR_SRC\"" >&2
     echo
