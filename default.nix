@@ -73,6 +73,9 @@
   nodeSupport ? agentName == "pi",
   pythonSupport ? true,
 }:
+assert
+  lib.versionAtLeast (lib.getVersion bubblewrap) "0.12.0"
+  || throw "bubblewrap version >= 0.12.0 is required";
 let
   agent =
     if agentName == "pi" then
