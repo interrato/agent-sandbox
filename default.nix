@@ -80,13 +80,15 @@ let
         package = pi-coding-agent;
         program = "${pi-coding-agent}/bin/pi";
         globals = [
-          ".pi"
           ".agents"
+          ".pi"
         ];
         readonly = [
+          ".agents/skills"
+          ".pi/agent/skills"
           ".pi/agent/AGENTS.md"
-          ".pi/agent/SYSTEM.md"
           ".pi/agent/APPEND_SYSTEM.md"
+          ".pi/agent/SYSTEM.md"
         ];
       }
     else
