@@ -307,6 +307,7 @@ writeShellApplication {
       --dir /home/agent \
     ${agentBinds}
       --bind "$WORKDIR_SRC" "$WORKDIR_DST" \
+      --new-session \
       --die-with-parent \
       --clearenv \
     ${envVars}
