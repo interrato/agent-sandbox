@@ -86,6 +86,11 @@ agent-sandbox.packages.x86_64-linux.default.override {
 
 Whether to enable network sharing and include networking tools.
 
+#### `webSupport` (default: `true`)
+
+Whether to include tools for content downloading, web scraping, and browser
+testing.
+
 #### `pdfSupport` (default: `true`)
 
 Whether to include tools for reading, editing, and creating PDFs.

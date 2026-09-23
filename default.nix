@@ -39,6 +39,7 @@
   patch,
   perl,
   pi-coding-agent,
+  playwright-test,
   poppler-utils,
   procps,
   proverif,
@@ -53,9 +54,10 @@
   unzip,
   util-linux,
   vim,
-  which,
-  zip,
   wget,
+  which,
+  yt-dlp,
+  zip,
   writeShellApplication,
   writeText,
 
@@ -66,6 +68,7 @@
   TERMINFO ? "${ncurses}/share/terminfo",
 
   networkSupport ? true,
+  webSupport ? true,
   pdfSupport ? true,
   docSupport ? false,
   cryptoSupport ? false,
@@ -76,6 +79,8 @@
 assert
   lib.versionAtLeast (lib.getVersion bubblewrap) "0.12.0"
   || throw "bubblewrap version >= 0.12.0 is required";
+assert
+  (!webSupport || networkSupport) || throw "networkSupport must be enabled together with webSupport";
 let
   agent =
     if agentName == "pi" then
@@ -192,7 +197,11 @@ let
     curl
     dig
     inetutils
+  ]
+  ++ lib.optionals webSupport [
+    playwright-test
     wget
+    yt-dlp
   ]
   ++ lib.optionals pdfSupport [
     poppler-utils
@@ -230,11 +239,13 @@ let
         scipy
       ]
       ++ lib.optionals networkSupport [
+        requests
+        scapy
+      ]
+      ++ lib.optionals webSupport [
         beautifulsoup4
         lxml
         playwright
-        requests
-        scapy
       ]
       ++ lib.optionals pdfSupport [
         ocrmypdf
